@@ -163,7 +163,7 @@ group.add(10);
 group.delete(10);
 console.log(group.has(10));
 
-// Make Group iterable
+// Make Group iterable.
 
 class GroupIterator {
     constructor(group) {
