@@ -11,7 +11,7 @@ const sum = (arr) => {
     for (let num of arr) {
         total += num
     }
-    return total
+    return total;
 }
 
 const reverseArray = (arr) => {
