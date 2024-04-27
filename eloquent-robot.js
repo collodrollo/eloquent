@@ -17,6 +17,11 @@ function roadsToGraph(roads) {
         } else {
             graph[from] = [to];
         }
+        if (Object.prototype.hasOwnProperty.call(graph, to)) {
+            graph[to].push(from)
+        } else {
+            graph[to] = [from];
+        }
     }
     return graph;
 }
@@ -24,17 +29,41 @@ function roadsToGraph(roads) {
 function roadsToGraphFunctional(roads) {
     const graph = Object.create(null);
     roads.map(road => road.split('-')).forEach(([from, to]) => {
-        if (Object.prototype.hasOwnProperty.call(graph, from)) {
-            graph[from].push(to)
-        } else {
-            graph[from] = [to]
-        }
+        graph[from] = graph[from] ? [...graph[from], to] : [to]
+        graph[to] = graph[to] ? [...graph[to], from] : [from];
     })
     return graph;
 }
 
-forEach[roads]
 
-const graph = roadsToGraph(roads);
+const graph = roadsToGraphFunctional(roads);
 console.log(Object.keys(graph));
 console.log(graph);
+
+class VillageState {
+    constructor(place, parcels) {
+        this.place = place;
+        this.parcels = parcels;
+    }
+
+    move(destination) {
+        if (!graph[this.place].includes(destination)) {
+            return this;
+        } else {
+            const parcels = this.parcels.map(p => {
+                if (this.place !== p.place) return p;
+                return {place: destination, address: p.address};
+            }).filter(p => p.place !== p.address)
+            return new VillageState(destination, parcels);
+        }
+    }
+}
+
+let first = new VillageState(
+    "Post Office",
+    [{place: "Post Office", address: "Alice's House"}]
+  );
+let next = first.move("Alice's House");
+console.log(next.place);
+console.log(next.parcels);
+console.log(first.place);
