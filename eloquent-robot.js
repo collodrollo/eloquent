@@ -89,7 +89,5 @@ function randomRobot(state) {
     return {direction: randomPick(graph[state.place])};
 }
 
-console.log(randomRobot(first));
-
 const state = VillageState.random(5);
 console.log(state.place, state.parcels);
