@@ -92,4 +92,4 @@ function randomRobot(state) {
 console.log(randomRobot(first));
 
 const state = VillageState.random(5);
-console.log(state.place, state.parcels)
+console.log(state.place, state.parcels);
