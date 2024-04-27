@@ -10,19 +10,17 @@ const roads = [
 
 function roadsToGraph(roads) {
     const graph = Object.create(null);
-    for (let road of roads) {
-        const [from, to] = road.split('-');
+    function addEdge(to, from) {
         if (Object.prototype.hasOwnProperty.call(graph, from)) {
             graph[from].push(to);
         } else {
-            graph[from] = [to];
-        }
-        if (Object.prototype.hasOwnProperty.call(graph, to)) {
-            graph[to].push(from)
-        } else {
-            graph[to] = [from];
+            graph[to].push(from);
         }
     }
+    roads.map(road => road.split(' ')).forEach(([from, to]) => {
+        addEdge(from, to);
+        addEdge(to, from);
+    }) 
     return graph;
 }
 
