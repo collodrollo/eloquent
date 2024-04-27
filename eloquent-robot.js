@@ -55,6 +55,19 @@ class VillageState {
             return new VillageState(destination, parcels);
         }
     }
+
+    static random(parcelCount) {
+        const parcels = [];
+        for (let i = 0; i < parcelCount; i += 1) {
+            const address = randomPick(Object.keys(graph));
+            let place;
+            do {
+                place = randomPick(Object.keys(graph))
+            } while (place === address);
+            parcels.push({place, address})
+        }
+        return new VillageState("Post Office", parcels)
+    }
 }
 
 let first = new VillageState(
@@ -65,3 +78,18 @@ let next = first.move("Alice's House");
 console.log(next.place);
 console.log(next.parcels);
 console.log(first.place);
+
+
+function randomPick(array) {
+    const i = Math.floor(Math.random() * array.length);
+    return array[i];
+}
+
+function randomRobot(state) {
+    return {direction: randomPick(graph[state.place])};
+}
+
+console.log(randomRobot(first));
+
+const state = VillageState.random(5);
+console.log(state.place, state.parcels)
